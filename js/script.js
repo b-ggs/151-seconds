@@ -218,7 +218,7 @@ function init()
 	var c1q2 = new Question(
 		null,
 		"Major types of biomolecules",
-		["A _ _ _ _ _   A _ _ _ _", "C _ _ _ _ _ _ _ _ _ _ _ _ _", "N _ _ _ _ _ _ _ _ _ _", "L _ _ _ _ _"],
+		["A _ _ _ _ _   A _ _ _", "C _ _ _ _ _ _ _ _ _ _ _ _ _", "N _ _ _ _ _ _ _ _ _ _", "L _ _ _ _ _"],
 		["amino acid", "carbohydrates", "nucleotides", "lipids"]);
 
 	var c1q3 = new Question(
