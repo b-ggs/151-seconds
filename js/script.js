@@ -2,6 +2,11 @@ $(document).ready(function()
 {
 	$(".button-collapse").sideNav();
 	init();
+	$('#answer-form').submit(function()
+	{
+		// return false;
+		validate();
+	});
 })
 
 var currentColor;
