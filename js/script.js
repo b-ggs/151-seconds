@@ -6,6 +6,7 @@ $(document).ready(function()
 	{
 		// return false;
 		validate();
+		return false;
 	});
 })
 
