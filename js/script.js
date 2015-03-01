@@ -8,6 +8,7 @@ var currentColor;
 var game;
 
 var currentCategoryIndex = null;
+var currentQuestionsLeft = null;
 var currentQuestionIndex = null;
 var currentAnswerIndex = null;
 
@@ -33,9 +34,50 @@ function getCurrentHint()
 	return game.categories[currentCategoryIndex].questions[currentQuestionIndex].hints[currentAnswerIndex];
 }
 
+function contains(a, obj)
+{
+    for (var i = 0; i < a.length; i++)
+    {
+        if (a[i] === obj) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function position(a, obj)
+{
+	for (var i = 0; i < a.length; i++)
+    {
+        if (a[i] === obj) {
+            return i;
+        }
+    }
+    return false;
+}
+
+function generateQuestionIndex()
+{
+	var ret;
+
+	console.log(currentQuestionsLeft);
+
+	do
+	{
+		ret = Math.floor(Math.random() * 10);
+	} while(!contains(currentQuestionsLeft, ret));
+
+	console.log(ret);
+	currentQuestionsLeft.splice(position(currentQuestionsLeft, ret), 1);
+	console.log(currentQuestionsLeft);
+
+	return ret;
+}
+
 function resetGame()
 {
 	currentCategory = null;
+	currentQuestionsLeft = null;
 	currentQuestion = null;
 	currentAnswerIndex = null;
 	currentScore = 0;
@@ -48,7 +90,7 @@ function giveQuestion()
 		{
 			console.log(getCurrentCategory());
 			console.log(getCurrentQuestion());
-			$("#question").text(getCurrentQuestion().question);
+			$("#question").text("Question " + (10 - currentQuestionsLeft.length) +  " of 10: " + getCurrentQuestion().question);
 			currentAnswerIndex = Math.floor(Math.random() * getCurrentQuestion().answers.length);
 			console.log("Selected index: " + currentAnswerIndex);
 			console.log(getCurrentHint());
@@ -100,12 +142,12 @@ function validate()
 		currentScore++;
 	else
 	{
-		alert("Wrong answer! The correct answer to this question is: " + getCurrentAnswer())
+		alert("Wrong answer!\nYou answered: " + answerFields[0].toUpperCase() + "\nThe correct answer to this question is: " + getCurrentAnswer().toUpperCase())
 	}
 
-	if(currentQuestionIndex < 9)
+	if(currentQuestionsLeft.length > 0)
 	{
-		currentQuestionIndex++;
+		currentQuestionIndex = generateQuestionIndex();
 		giveQuestion();
 	}
 	else
@@ -194,7 +236,8 @@ function startQuestions(n)
 	hideMain();
 	
 	currentCategoryIndex = n;
-	currentQuestionIndex = 0;
+	currentQuestionsLeft = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+	currentQuestionIndex = generateQuestionIndex();
 
 	giveQuestion();
 }
