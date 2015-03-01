@@ -9,6 +9,7 @@ var game;
 
 var currentCategoryIndex = null;
 var currentQuestionIndex = null;
+var currentAnswerIndex = null;
 
 var currentScore = null;
 
@@ -22,10 +23,21 @@ function getCurrentQuestion()
 	return game.categories[currentCategoryIndex].questions[currentQuestionIndex];
 }
 
+function getCurrentAnswer()
+{
+	return game.categories[currentCategoryIndex].questions[currentQuestionIndex].answers[currentAnswerIndex];
+}
+
+function getCurrentHint()
+{
+	return game.categories[currentCategoryIndex].questions[currentQuestionIndex].hints[currentAnswerIndex];
+}
+
 function resetGame()
 {
 	currentCategory = null;
 	currentQuestion = null;
+	currentAnswerIndex = null;
 	currentScore = 0;
 }
 
@@ -37,6 +49,10 @@ function giveQuestion()
 			console.log(getCurrentCategory());
 			console.log(getCurrentQuestion());
 			$("#question").text(getCurrentQuestion().question);
+			currentAnswerIndex = Math.floor(Math.random() * getCurrentQuestion().answers.length);
+			console.log("Selected index: " + currentAnswerIndex);
+			console.log(getCurrentHint());
+			console.log(getCurrentAnswer());
 			checkImage();
 			setHints();
 			hideAnswerFields();
@@ -59,27 +75,32 @@ function checkImage()
 
 function validate()
 {
-	var max = getCurrentQuestion().hints.length;
-	var answerFields = [$("#answer-field-0").val(), $("#answer-field-1").val(), $("#answer-field-2").val(), $("#answer-field-3").val(), $("#answer-field-4").val(), $("#answer-field-5").val()]
+	var max = 1;
+	// var max = getCurrentQuestion().hints.length;
+	var answerFields = [$("#answer-field-0").val()]
+	// var answerFields = [$("#answer-field-0").val(), $("#answer-field-1").val(), $("#answer-field-2").val(), $("#answer-field-3").val(), $("#answer-field-4").val(), $("#answer-field-5").val()]
 	var flag = true;
 
 	console.log(answerFields);
-	console.log(getCurrentQuestion().answers);
+	console.log(getCurrentAnswer());
 
-	for(var i = 0; i < max; i++)
-	{
-		if(!(validateField(answerFields[i], getCurrentQuestion().answers[i])))
+	if(!(validateField(answerFields[0], getCurrentAnswer())))
 			flag = false;
 
-		if(!flag)
-			break;
-	}
+	// for(var i = 0; i < max; i++)
+	// {
+	// 	if(!(validateField(answerFields[i], getCurrentAnswer)))
+	// 		flag = false;
+
+	// 	if(!flag)
+	// 		break;
+	// }
 
 	if(flag)
 		currentScore++;
 	else
 	{
-		alert("Wrong answer! The correct answer/s to this question is/are: " + getCurrentQuestion().answers)
+		alert("Wrong answer! The correct answer to this question is: " + getCurrentAnswer())
 	}
 
 	if(currentQuestionIndex < 9)
@@ -98,49 +119,60 @@ function validate()
 
 function validateField(a, b)
 {
-	console.log(a.toUpperCase());
-	console.log(b.toUpperCase());
+	if(b instanceof Array)
+	{
+		for(var i = 0; i < b.length; i++)
+		{
+			if(a.toUpperCase() == b[i].toUpperCase())
+				return true;
+		}
+	}
+	else		
+	{
+		if(a.toUpperCase() == b.toUpperCase())
+			return true;
+	}
 
-	if(a.toUpperCase() == b.toUpperCase())
-		return true;
 	return false;
 }
 
 function setHints()
 {
-	console.log(getCurrentQuestion().hints);
+	// console.log(getCurrentQuestion().hints);
 
-	switch(getCurrentQuestion().hints.length)
-	{
-		case 7: $("#answer-hint-6").text("Hint: " + getCurrentQuestion().hints[6]);
-		case 6: $("#answer-hint-5").text("Hint: " + getCurrentQuestion().hints[5]);
-		case 5: $("#answer-hint-4").text("Hint: " + getCurrentQuestion().hints[4]);
-		case 4: $("#answer-hint-3").text("Hint: " + getCurrentQuestion().hints[3]);
-		case 3: $("#answer-hint-2").text("Hint: " + getCurrentQuestion().hints[2]);
-		case 2: $("#answer-hint-1").text("Hint: " + getCurrentQuestion().hints[1]);
-		case 1: $("#answer-hint-0").text("Hint: " + getCurrentQuestion().hints[0]);
-	}
+	// switch(getCurrentQuestion().hints.length)
+	// {
+	// 	case 7: $("#answer-hint-6").text("Hint: " + getCurrentQuestion().hints[6]);
+	// 	case 6: $("#answer-hint-5").text("Hint: " + getCurrentQuestion().hints[5]);
+	// 	case 5: $("#answer-hint-4").text("Hint: " + getCurrentQuestion().hints[4]);
+	// 	case 4: $("#answer-hint-3").text("Hint: " + getCurrentQuestion().hints[3]);
+	// 	case 3: $("#answer-hint-2").text("Hint: " + getCurrentQuestion().hints[2]);
+	// 	case 2: $("#answer-hint-1").text("Hint: " + getCurrentQuestion().hints[1]);
+	// 	case 1: $("#answer-hint-0").text("Hint: " + getCurrentHint());
+	// }
+
+	$("#answer-hint-0").text("Hint: " + getCurrentHint());
 }
 
 function hideAnswerFields()
 {
 	$("#answer-0").show();
-	$("#answer-1").show();
-	$("#answer-2").show();
-	$("#answer-3").show();
-	$("#answer-4").show();
-	$("#answer-5").show();
-	$("#answer-6").show();
+	// $("#answer-1").show();
+	// $("#answer-2").show();
+	// $("#answer-3").show();
+	// $("#answer-4").show();
+	// $("#answer-5").show();
+	// $("#answer-6").show();
 
-	switch(getCurrentQuestion().hints.length)
-	{
-		case 1: $("#answer-1").hide();
-		case 2: $("#answer-2").hide();
-		case 3: $("#answer-3").hide();
-		case 4: $("#answer-4").hide();
-		case 5: $("#answer-5").hide();
-		case 6: $("#answer-6").hide();
-	}
+	// switch(getCurrentQuestion().hints.length)
+	// {
+	// 	case 1: $("#answer-1").hide();
+	// 	case 2: $("#answer-2").hide();
+	// 	case 3: $("#answer-3").hide();
+	// 	case 4: $("#answer-4").hide();
+	// 	case 5: $("#answer-5").hide();
+	// 	case 6: $("#answer-6").hide();
+	// }
 }
 
 function hideImage()
@@ -303,7 +335,7 @@ function init()
 		null,
 		"Molecules that have both hydrophilic or hydrophobic portions",
 		["A _ _ _ _ _ _ _ _ _ _"],
-		["Amphiphilic"]);
+		[["Amphiphilic", "Amphipathic"]]);
 
 	var c2q7 = new Question(
 		null,
@@ -680,8 +712,8 @@ function init()
 	var c8q9 = new Question(
 		null,
 		"Having both polar and nonpolar regions and therefore being both hydrophobic and hydrophilic",
-		["A _ _ _ _ _ _ _ _ _, or", "A _ _ _ _ _ _ _ _ _ _"],
-		["Amphiphilic", "Amphiphatic"]);
+		["A _ _ _ _ _ _ _ _ _ _"],
+		[["Amphiphilic", "Amphiphatic"]]);
 
 	var c8q10 = new Question(
 		null,
