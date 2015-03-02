@@ -11,6 +11,51 @@ $(document).ready(function()
 	
 	$("body").removeClass('white').addClass('accent-1', "slow", "swing").addClass('blue', "slow", "swing");
 	$(".game-intro").slideDown("slow");
+
+	// var player = new jPlayerPlaylist({
+	// 	jPlayer: "#jplayer"
+	// },
+	// [{
+	// 	mp3: "mp3/bgm.mp3"
+	// }],
+	// {
+	// 	swfPath: "/js",
+ //        supplied: "mp3"
+	// });
+
+	$("#jquery_jplayer_1").jPlayer({
+        ready: function() {
+          $(this).jPlayer("setMedia", {
+            mp3: "mp3/bgm.mp3"
+          }).jPlayer("play");
+          // var click = document.ontouchstart === undefined ? 'click' : 'touchstart';
+          // var kickoff = function () {
+          //   $("#jquery_jplayer_1").jPlayer("play");
+          //   document.documentElement.removeEventListener(click, kickoff, true);
+          // };
+          // document.documentElement.addEventListener(click, kickoff, true);
+        },
+        swfPath: "/js",
+        loop: true,
+        cssSelector: {
+          mute: "#mute",
+          unmute: "#unmute"
+        }
+      });
+
+	$("#jquery_jplayer_1").jPlayer("play");
+
+	// $("#jplayer").jPlayer({
+	// 	ready: function()
+	// 	{
+	// 		$(this).jPlayer("setMedia", {
+	// 			mp3: "mp3/bgm.mp3"
+	// 		});
+	// 	},
+	// 	cssSelectorAncestor: "",
+ //        swfPath: "/js",
+ //        supplied: "mp3"
+	// })
 })
 
 var currentColor;
@@ -25,6 +70,20 @@ var currentScore = null;
 
 var sec = 151;
 var timer;
+
+function mute()
+{
+	$("#jquery_jplayer_1").jPlayer("mute");
+	$("#mute").hide();
+	$("#unmute").show();
+}
+
+function unmute()
+{
+	$("#jquery_jplayer_1").jPlayer("unmute");
+	$("#unmute").hide();
+	$("#mute").show();
+}
 
 function startTimer()
 {

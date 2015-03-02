@@ -7,15 +7,18 @@
 	<script src="js/jquery-2.1.1.js" type="text/javascript"></script>
 	<script src="js/jquery-ui.js" type="text/javascript"></script>
 	<script src="js/materialize.js" type="text/javascript"></script>
+	<script src="js/jquery.jplayer.min.js" type="text/javascript"></script>
+	<script src="js/jplayer.playlist.min.js" type="text/javascript"></script>
 	<script src="js/script.js" type="text/javascript"></script>
 </head>
 <body>
+	<div id="jquery_jplayer_1" class="jp-jplayer"></div>
 	<div class="game-intro container" style="display: none;">
 		<div class="row">
 			<div class="col s12 offset-m2 m8">
 				<div class="card">
 					<div class="card-content" style="text-align: center;">
-						<img src="img/151_logo.png" /><br />
+						<img src="img/151_logo.png" style="width: 100%" /><br />
 						<a class="waves-effect waves-light btn-large white-text" onclick="showGameUi();">Play</a>
 					</div>
 				</div>
@@ -28,7 +31,9 @@
 				<a href="#" class="brand-logo" onclick="endQuestions(); resetColor();"><i style="font-size: 30px;" class="mdi-social-school"></i> 151s</a>
 				<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
 				<ul class="right hide-on-med-and-down">
-			        <li>Time Remaining: <span class="time-left">151</span></li>
+			        <li><a href="#">Time Remaining: <span class="time-left">151</span></a></li>
+			        <li><a href="#" id="mute" onclick="mute()"><i class="mdi-av-volume-off"></i></a></li>
+			        <li><a href="#" id="unmute" onclick="unmute()" style="display: none;"><i class="mdi-av-volume-up"></i></a></li>
 			    </ul>
 			    <!-- <ul class="side-nav" id="mobile-demo">
 			    	<li><a href="#" onclick="endQuestions(); resetColor();">Play</a></li>
