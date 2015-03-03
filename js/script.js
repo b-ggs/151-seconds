@@ -241,7 +241,7 @@ function validate()
 	{
 		if(getCurrentAnswer() instanceof Array)
 		{
-			var builder;
+			var builder = "";
 			for(var i = 0; i < getCurrentAnswer().length; i++)
 			{
 				builder += getCurrentAnswer()[i].toUpperCase();
