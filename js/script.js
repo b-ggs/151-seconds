@@ -239,7 +239,21 @@ function validate()
 		currentScore++;
 	else
 	{
-		alert("Wrong answer!\nYou answered: " + answerFields[0].toUpperCase() + "\nThe correct answer to this question is: " + getCurrentAnswer().toUpperCase())
+		if(getCurrentAnswer() instanceof Array)
+		{
+			var builder;
+			for(var i = 0; i < getCurrentAnswer().length; i++)
+			{
+				builder += getCurrentAnswer()[i];
+				if(i != getCurrentAnswer().length - 1)
+					builder += " or ";
+			}
+			alert("Wrong answer!\nYou answered: " + answerFields[0].toUpperCase() + "\nThe correct answers to this question are: " + getCurrentAnswer().toUpperCase());
+		}
+		else
+		{
+			alert("Wrong answer!\nYou answered: " + answerFields[0].toUpperCase() + "\nThe correct answer to this question is: " + getCurrentAnswer().toUpperCase());
+		}
 	}
 
 	if(currentQuestionsLeft.length > 0)
