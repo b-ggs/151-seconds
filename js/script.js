@@ -244,11 +244,11 @@ function validate()
 			var builder;
 			for(var i = 0; i < getCurrentAnswer().length; i++)
 			{
-				builder += getCurrentAnswer()[i];
+				builder += getCurrentAnswer()[i].toUpperCase();
 				if(i != getCurrentAnswer().length - 1)
 					builder += " or ";
 			}
-			alert("Wrong answer!\nYou answered: " + answerFields[0].toUpperCase() + "\nThe correct answers to this question are: " + getCurrentAnswer().toUpperCase());
+			alert("Wrong answer!\nYou answered: " + answerFields[0].toUpperCase() + "\nThe correct answers to this question are: " + builder);
 		}
 		else
 		{
